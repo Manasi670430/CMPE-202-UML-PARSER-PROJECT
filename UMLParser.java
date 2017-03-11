@@ -97,12 +97,6 @@ public class UMLParser {
             }
         }
 		
-		/*List<TypeDeclaration> typ = cu.getTypes();
-		for (TypeDeclaration trp : typ) {
-			if (trp instanceof FieldDeclaration) {
-				System.out.println("Members are:"+trp.getMembers());
-			} 
-		}*/
 	}
 
 	private static void GetTheClassDetails(CompilationUnit cu) {
@@ -129,13 +123,6 @@ public class UMLParser {
 		}
 	}
 
-	/*
-	 * for (TypeDeclaration<> type : types1) { // Go through all fields,
-	 * methods, etc. in this type NodeList<BodyDeclaration<?>> members =
-	 * type.getMembers(); for (BodyDeclaration<?> member : members) { if (member
-	 * instanceof MethodDeclaration) { MethodDeclaration method =
-	 * (MethodDeclaration) member; changeMethod(method); } } }
-	 */
 	private static void GetModifiersDetails(CompilationUnit cu) {
 		//extracting Accessspecifier of class
 		List<TypeDeclaration> types1 = cu.getTypes();
