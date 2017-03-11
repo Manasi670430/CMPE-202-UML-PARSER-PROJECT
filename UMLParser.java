@@ -136,5 +136,16 @@ public class UMLParser {
 	 * instanceof MethodDeclaration) { MethodDeclaration method =
 	 * (MethodDeclaration) member; changeMethod(method); } } }
 	 */
-
+	private static void GetModifiersDetails(CompilationUnit cu) {
+		//extracting Accessspecifier of class
+		List<TypeDeclaration> types1 = cu.getTypes();
+		for (TypeDeclaration type : types1) {
+			if (type instanceof ClassOrInterfaceDeclaration) {
+				int a = type.getModifiers();
+				String M = Modifier.toString(a);
+				System.out.println("Access Specifier of Class is:" + M);
+			}
+		}
+ 
+	}
 }
