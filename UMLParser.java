@@ -87,12 +87,6 @@ public class UMLParser {
                 	
                 	System.out.println("Type of variable is "+((FieldDeclaration) member).getType());
                 	
-                	//System.out.println(((FieldDeclaration) member).getModifiers());
-                    
-                    //System.out.println(((TypeDeclaration) member).getModifiers());
-    				//String Mn = Modifier.toString(a);
-    				//System.out.println("Access Specifier of Class:" + Mn);
-                    
                 }
             }
         }
@@ -114,17 +108,38 @@ public class UMLParser {
 				} else {
 					System.out.println("This is class");
 					System.out.println("Class Name is:" + type.getName());
-	//				GetModifiersDetails(cu);
-					// int a = type.getModifiers();
-					// if (a == 1) {
+	
 
 				}
 			}
 		}
 	}
 
+	private static void classOrInterface(CompilationUnit cu) {
+		// TODO Auto-generated method stub
+
+		List<TypeDeclaration> type1 = (List<TypeDeclaration>) cu.getTypes();
+
+		
+
+		for (TypeDeclaration t : type1) {
+			ClassOrInterfaceDeclaration clv = (ClassOrInterfaceDeclaration) t;
+			if (clv.isInterface()) {
+				String classOrInterface = "Interface";
+
+				hmap.put(classOrInterface, t);
+				fetchVariable(hmap);
+			} else {
+				String classOrInterface = "class";
+
+				hmap.put(classOrInterface, t);
+				fetchVariable(hmap);
+			}
+		}
+	}
+
 	private static void GetModifiersDetails(CompilationUnit cu) {
-		//extracting Accessspecifier of class
+		
 		List<TypeDeclaration> types1 = cu.getTypes();
 		for (TypeDeclaration type : types1) {
 			if (type instanceof ClassOrInterfaceDeclaration) {
