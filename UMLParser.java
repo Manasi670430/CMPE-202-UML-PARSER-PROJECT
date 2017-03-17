@@ -10,7 +10,10 @@ import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.TypeDeclaration;
 
 public class UMLParser {
-
+	
+	private static HashMap<String, TypeDeclaration> hmap = new HashMap<String, TypeDeclaration>();
+	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
+	
 	public static void main(String[] args) throws Exception {
 		// creates an input stream for the file to be parsed
 		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/Test1/src/test1.java");
@@ -64,6 +67,32 @@ public class UMLParser {
         }
 	}
 
+	private static void fetchVariable(HashMap<String, TypeDeclaration> hmap) {
+		// TODO Auto-generated method stub
+		Iterator<Entry<String, TypeDeclaration>> mapIterator = hmap.entrySet().iterator();
+		System.out.print(hmap);
+		List<FieldDeclaration> myVariableList = new ArrayList<FieldDeclaration>();
+
+		for(FieldDeclaration fd: myVariableList){
+
+			Type variable=fd.getType();
+			System.out.println(variable);
+			
+			//Checking for the reference type of the variable whether primitive type or reference type
+        	if(((FieldDeclaration) fd).getType() instanceof PrimitiveType)
+			{
+				//call generatePLantUML method to build the string input for plant UML
+        		String plantUMLInputString = new PlantUMLInputStringBuilder().generatePlantUMlStringInput(fd);
+			}
+        	else if(((FieldDeclaration) fd).getType() instanceof ReferenceType)
+        	{
+				//call generatePLantUML method to build the string input for plant UML
+        		
+        	}
+
+
+		}
+	}
 	private static void GetVariableDetails(CompilationUnit cu) {
 		// TODO Auto-generated method stub
 		List<TypeDeclaration> types = cu.getTypes();
