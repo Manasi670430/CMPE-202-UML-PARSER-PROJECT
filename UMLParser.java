@@ -1,3 +1,10 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import japa.parser.ast.type.PrimitiveType;
+import japa.parser.ast.type.ReferenceType;
+import japa.parser.ast.type.Type;
 import java.io.FileInputStream;
 import java.lang.reflect.Modifier;
 import java.util.List;
@@ -16,9 +23,10 @@ public class UMLParser {
 	
 	public static void main(String[] args) throws Exception {
 		// creates an input stream for the file to be parsed
-		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/Test1/src/test1.java");
+		//FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/Test1/src/test1.java");
+		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/uml-parser-test-1/src/A.java");
 		// parse the file
-				//"C:/Users/Manasi Milind Joshi/workspace/CuPrinter/src/main/java/TestPack/test1.java");
+				
 		CompilationUnit cu = JavaParser.parse(in);
 
 		// change the methods names and parameters
