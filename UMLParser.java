@@ -23,15 +23,12 @@ public class UMLParser {
 	
 	public static void main(String[] args) throws Exception {
 		// creates an input stream for the file to be parsed
-		//FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/Test1/src/test1.java");
 		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/uml-parser-test-1/src/A.java");
 		// parse the file
 				
 		CompilationUnit cu = JavaParser.parse(in);
 
-		// change the methods names and parameters
-		// changeMethods(cu);
-
+		
 		// prints the changed compilation unit
 		System.out.println(cu.toString());
 		GetTheClassDetails(cu);
@@ -50,7 +47,6 @@ public class UMLParser {
                     
                 	System.out.println("Method name is :"+((MethodDeclaration) member).getName());
                 	
-                	//int a=((MethodDeclaration) member).getModifiers();
                 	System.out.println(((MethodDeclaration) member).getModifiers());
                 	int x=((MethodDeclaration) member).getModifiers();
                 	
@@ -64,12 +60,7 @@ public class UMLParser {
                 	
             
                 	
-                	//System.out.println(((FieldDeclaration) member).getModifiers());
-                    
-                    //System.out.println(((TypeDeclaration) member).getModifiers());
-    				//String Mn = Modifier.toString(a);
-    				//System.out.println("Access Specifier of Class:" + Mn);
-                    
+                	
                 }
             }
         }
