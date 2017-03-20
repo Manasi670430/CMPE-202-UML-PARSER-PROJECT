@@ -124,11 +124,11 @@ public class UMLParser {
 	private static void GetTheClassDetails(CompilationUnit cu) {
 		//extracting ClassName
 		List<TypeDeclaration> types1 = cu.getTypes();
-		// System.out.println(types1);
+		
 		for (TypeDeclaration type : types1) {
 
 			if (type instanceof ClassOrInterfaceDeclaration)
-			// System.out.println("Output of type is:"+type);
+			
 			{
 				if (((ClassOrInterfaceDeclaration) type).isInterface()) {
 					System.out.println("This is interface");
