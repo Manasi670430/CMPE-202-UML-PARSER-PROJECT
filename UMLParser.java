@@ -19,6 +19,10 @@ import japa.parser.ast.body.TypeDeclaration;
 public class UMLParser {
 	
 	private static HashMap<String, TypeDeclaration> hmap = new HashMap<String, TypeDeclaration>();
+	
+	public static HashMap<String, AttributeDetails> hashmp = new HashMap();
+	public static HashMap<String, ClassDetails> hashmp1 = new HashMap();
+	public static HashMap<String, MethodDetails> hashmp2 = new HashMap();
 	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
 	
 	public static void main(String[] args) throws Exception {
@@ -36,7 +40,7 @@ public class UMLParser {
 		GetMethodDetails(cu);
 	}
 
-	private static void GetMethodDetails(CompilationUnit cu) {
+	/*private static void GetMethodDetails(CompilationUnit cu) {
 		// TODO Auto-generated method stub
 		List<TypeDeclaration> types = cu.getTypes();
         for (TypeDeclaration type : types) {
@@ -64,8 +68,59 @@ public class UMLParser {
                 }
             }
         }
-	}
+	}*/
+		private static void GetMethodDetails(CompilationUnit cu) {
+		// TODO Auto-generated method stub
+		List<TypeDeclaration> types = cu.getTypes();
+		
+		MethodDetails md = new MethodDetails();
+		for (TypeDeclaration type : types) {
+			// Go through all fields, methods, etc. in this type
+			List<BodyDeclaration> members = type.getMembers();
+			for (BodyDeclaration member : members) {
+				if (member instanceof MethodDeclaration) {
 
+					System.out.println("Method name is :"+((MethodDeclaration) member).getName());
+					md.Name = ((MethodDeclaration) member).getName();
+					
+					System.out.println(((MethodDeclaration) member).getModifiers());
+					
+					System.out.println(((MethodDeclaration) member).getType());
+					md.returnType = ((MethodDeclaration) member).getType();
+					
+					int x=((MethodDeclaration) member).getModifiers();
+
+					if(x==1){
+						System.out.println("Modifier of method is: "+ Modifier.toString(x));
+						md.Modifier = "Public";
+					}
+					if(x==2)
+					{
+						System.out.println("Modifier of method is : "+ Modifier.toString(x));
+						md.Modifier = "Private";
+					}
+
+					List<Parameter> a = ((MethodDeclaration) member).getParameters();
+					
+					System.out.println("list of parameters is :"	+a);
+					
+					for(Parameter i: a)
+					{
+						System.out.println("list of parameters is :"	+i);
+						md.Pramaters = i; 
+					}
+
+					hashmp2.put(md.Name,md);
+					//System.out.println(((FieldDeclaration) member).getModifiers());
+
+					//System.out.println(((TypeDeclaration) member).getModifiers());
+					//String Mn = Modifier.toString(a);
+					//System.out.println("Access Specifier of Class:" + Mn);
+
+				}
+			}
+		}
+	}
 	private static void fetchVariable(HashMap<String, TypeDeclaration> hmap) {
 		// TODO Auto-generated method stub
 		Iterator<Entry<String, TypeDeclaration>> mapIterator = hmap.entrySet().iterator();
