@@ -25,6 +25,16 @@ public class UMLParser {
 	public static HashMap<String, MethodDetails> hashmp2 = new HashMap();
 	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
 	
+	
+	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
+	private static List<ClassDetails> classDetailList = new ArrayList<ClassDetails>();
+	private static List<MethodDetails> methodDetaisList = new ArrayList<MethodDetails>();
+	private static List<AttributeDetails> listOfFields = new ArrayList<AttributeDetails>();
+
+	private static ClassTemplate ct = new ClassTemplate();
+
+	private static ClassDetails cd = new ClassDetails();
+	
 	public static void main(String[] args) throws Exception {
 		// creates an input stream for the file to be parsed
 		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/uml-parser-test-1/src/A.java");
