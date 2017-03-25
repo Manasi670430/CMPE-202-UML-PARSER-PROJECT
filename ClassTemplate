@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+
+import japa.parser.ast.body.ConstructorDeclaration;
+import japa.parser.ast.body.FieldDeclaration;
+import japa.parser.ast.body.MethodDeclaration;
+
+public class ClassTemplate {
+	
+
+	
+	private ClassDetails cd;
+	//List<ClassDetails> classDetailList = new ArrayList<ClassDetails>();
+	
+	/**
+	 * @return the cd
+	 */
+	public ClassDetails getCd() {
+		return cd;
+	}
+	/**
+	 * @param cd the cd to set
+	 */
+	public void setCd(ClassDetails cd) {
+		this.cd = cd;
+	}
+	List<AttributeDetails> listOfFields = new ArrayList<AttributeDetails>();
+	List<MethodDetails> listOfMethods = new ArrayList<MethodDetails>();
+	List<ConstructorDeclaration> listOfConstructor = new ArrayList<ConstructorDeclaration>();
+	
+	
+	
+	/**
+	 * @return the listOfFields
+	 */
+	public List<AttributeDetails> getListOfFields() {
+		return listOfFields;
+	}
+	/**
+	 * @param listOfFields the listOfFields to set
+	 */
+	public void setListOfFields(List<AttributeDetails> listOfFields) {
+		this.listOfFields = listOfFields;
+	}
+	
+	/**
+	 * @return the listOfMethods
+	 */
+	public List<MethodDetails> getListOfMethods() {
+		return listOfMethods;
+	}
+	/**
+	 * @param listOfMethods the listOfMethods to set
+	 */
+	public void setListOfMethods(List<MethodDetails> listOfMethods) {
+		this.listOfMethods = listOfMethods;
+	}
+	/**
+	 * @return the listOfConstructor
+	 */
+	public List<ConstructorDeclaration> getListOfConstructor() {
+		return listOfConstructor;
+	}
+	/**
+	 * @param listOfConstructor the listOfConstructor to set
+	 */
+	public void setListOfConstructor(List<ConstructorDeclaration> listOfConstructor) {
+		this.listOfConstructor = listOfConstructor;
+	}
+	
+	
+	
+}
