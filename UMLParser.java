@@ -1,31 +1,35 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map.Entry;
-import japa.parser.ast.type.PrimitiveType;
-import japa.parser.ast.type.ReferenceType;
-import japa.parser.ast.type.Type;
-import java.io.FileInputStream;
-import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Map.Entry;
+
+import javax.swing.plaf.metal.MetalToggleButtonUI;
+
+
 import japa.parser.JavaParser;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.BodyDeclaration;
 import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 import japa.parser.ast.body.FieldDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.body.Parameter;
 import japa.parser.ast.body.TypeDeclaration;
+import japa.parser.ast.type.PrimitiveType;
+import japa.parser.ast.type.ReferenceType;
+import japa.parser.ast.type.Type;
 
 public class UMLParser {
-	
+
+
 	private static HashMap<String, TypeDeclaration> hmap = new HashMap<String, TypeDeclaration>();
-	
-	public static HashMap<String, AttributeDetails> hashmp = new HashMap();
-	public static HashMap<String, ClassDetails> hashmp1 = new HashMap();
-	public static HashMap<String, MethodDetails> hashmp2 = new HashMap();
-	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
-	
-	
+	//private static HashMap<String, TypeDeclaration> hmap1 = new HashMap<String, TypeDeclaration>();
+	//private static HashMap<String, TypeDeclaration> hmap2 = new HashMap<String, TypeDeclaration>();
+
+
 	private static List<FieldDeclaration> storeVariableDetails = new ArrayList<FieldDeclaration>();
 	private static List<ClassDetails> classDetailList = new ArrayList<ClassDetails>();
 	private static List<MethodDetails> methodDetaisList = new ArrayList<MethodDetails>();
@@ -34,21 +38,75 @@ public class UMLParser {
 	private static ClassTemplate ct = new ClassTemplate();
 
 	private static ClassDetails cd = new ClassDetails();
-	
-	public static void main(String[] args) throws Exception {
-		// creates an input stream for the file to be parsed
-		FileInputStream in = new FileInputStream("C:/Users/Manasi Milind Joshi/workspace/uml-parser-test-1/src/A.java");
-		// parse the file
-				
-		CompilationUnit cu = JavaParser.parse(in);
 
+	//public static HashMap<String, AttributeDetails> hashmp = new HashMap();
+	//public static HashMap<String, ClassDetails> hashmp1 = new HashMap();
+	//public static HashMap<String,> hashmpClassNameToMethodMap = new HashMap();
+	//public static HashMap<String, MethodDetails> hashmp2 = new HashMap();
+
+
+	private static HashMap<String, TypeDeclaration> typeCollectionMap = new HashMap<String, TypeDeclaration>();
+
+	public static void main(String[] args) throws Exception {
+
+		ArrayList<String> javaFileNames = new ArrayList<String>();
+		String folderRoot = args[0];
+		String imageFileName = args[1];
+		final File folder = new File(folderRoot);
+		ArrayList<File> files = new ArrayList<File>();
 		
-		// prints the changed compilation unit
-		System.out.println(cu.toString());
-		GetTheClassDetails(cu);
-		GetVariableDetails(cu);
-		GetMethodDetails(cu);
-	}
+		File[] fileArray = folder.listFiles();
+		
+		for(File file : fileArray)
+		{
+			if(file.isFile() && file.getName().endsWith(".java"))
+			{
+				files.add(file);
+			}
+		}
+		
+		HashMap<String, ClassTemplate> classTemplateMap = new HashMap<String,ClassTemplate>();
+		
+		List<ClassTemplate> ctList = new ArrayList<ClassTemplate>();
+		//javaFileNames = listFilesForFolder(folder);
+		CompilationUnit cu = null;
+		//ClassTemplate ctemplate = null;
+		
+		 ClassDetails classDetailList1 = new ClassDetails();
+		 List<MethodDetails> methodDetaisList1 = new ArrayList<MethodDetails>();
+		 List<AttributeDetails> listOfFields1 = new ArrayList<AttributeDetails>();
+
+		for (File individualFile : files) {
+			//FileInputStream in = new FileInputStream(folderRoot + fileName);
+			List<TypeDeclaration> types = new ArrayList<TypeDeclaration>();
+			//ClassTemplate ctemplate = null;
+
+			// parse the file
+			cu = JavaParser.parse(individualFile);
+			types = cu.getTypes();
+			System.out.println("Types is"+types);
+			classDetailList1  = GetTheClassDetails(types);
+			listOfFields1 = GetVariableDetails(types);
+			methodDetaisList1 = GetMethodDetails(types);
+			
+			//
+			ct.setCd(classDetailList1);
+			ct.setListOfFields(listOfFields1);
+			ct.setListOfMethods(methodDetaisList1);
+			ctList.add(ct);
+			classTemplateMap.put(((ClassOrInterfaceDeclaration)types.get(0)).getName(), ct);
+			//new ParseJavaToUML.ClassVisitor().visit(cu, umlParser);
+		}
+
+			// change the methods names and parameters
+			// changeMethods(cu);
+
+			// prints the changed compilation unit
+			
+
+			new PlantUMLInputStringBuilder().generatePlantUMlStringInput(classTemplateMap, imageFileName);
+
+		}
 
 	/*private static void GetMethodDetails(CompilationUnit cu) {
 		// TODO Auto-generated method stub
