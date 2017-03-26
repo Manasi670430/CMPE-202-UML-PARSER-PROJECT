@@ -108,39 +108,23 @@ public class UMLParser {
 
 		}
 
-	/*private static void GetMethodDetails(CompilationUnit cu) {
+	public static ArrayList<String> listFilesForFolder(final File folder) {
+		ArrayList<String> fileNames = new ArrayList<String>();
+		for (final File fileEntry : folder.listFiles()) {
+
+			if (fileEntry.getName().endsWith(".java") || fileEntry.getName().endsWith(".JAVA"))
+				fileNames.add(fileEntry.getName());
+		}
+		return fileNames;
+	}
+
+	private static List<MethodDetails> GetMethodDetails(List<TypeDeclaration> types) {
 		// TODO Auto-generated method stub
-		List<TypeDeclaration> types = cu.getTypes();
-        for (TypeDeclaration type : types) {
-            // Go through all fields, methods, etc. in this type
-            List<BodyDeclaration> members = type.getMembers();
-            for (BodyDeclaration member : members) {
-                if (member instanceof MethodDeclaration) {
-                    
-                	System.out.println("Method name is :"+((MethodDeclaration) member).getName());
-                	
-                	System.out.println(((MethodDeclaration) member).getModifiers());
-                	int x=((MethodDeclaration) member).getModifiers();
-                	
-                	if(x==1){
-                		System.out.println("Modifier of method is: "+ Modifier.toString(x));
-                	}
-                	if(x==2)
-                	{
-                		System.out.println("Modifier of method is : "+ Modifier.toString(x));
-                	}
-                	
-            
-                	
-                	
-                }
-            }
-        }
-	}*/
-		private static void GetMethodDetails(CompilationUnit cu) {
-		// TODO Auto-generated method stub
-		List<TypeDeclaration> types = cu.getTypes();
-		
+		//List<TypeDeclaration> types = cu.getTypes();
+
+
+		List<MethodDetails> methodDetaisList = new ArrayList<MethodDetails>();
+
 		MethodDetails md = new MethodDetails();
 		for (TypeDeclaration type : types) {
 			// Go through all fields, methods, etc. in this type
@@ -149,46 +133,60 @@ public class UMLParser {
 				if (member instanceof MethodDeclaration) {
 
 					System.out.println("Method name is :"+((MethodDeclaration) member).getName());
-					md.Name = ((MethodDeclaration) member).getName();
-					
+					//md.Name = ((MethodDeclaration) member).getName();
+					md.setName(((MethodDeclaration) member).getName());
+
 					System.out.println(((MethodDeclaration) member).getModifiers());
-					
+
 					System.out.println(((MethodDeclaration) member).getType());
-					md.returnType = ((MethodDeclaration) member).getType();
-					
+					//md.returnType = ((MethodDeclaration) member).getType();
+					md.setReturnType(((MethodDeclaration) member).getType());
+
 					int x=((MethodDeclaration) member).getModifiers();
 
 					if(x==1){
 						System.out.println("Modifier of method is: "+ Modifier.toString(x));
-						md.Modifier = "Public";
+						md.setModifier(Modifier.toString(x));
+						//md.Modifier = "Public";
 					}
 					if(x==2)
 					{
 						System.out.println("Modifier of method is : "+ Modifier.toString(x));
-						md.Modifier = "Private";
+						//md.Modifier = "Private";
+						md.setModifier(Modifier.toString(x));
 					}
 
-					List<Parameter> a = ((MethodDeclaration) member).getParameters();
-					
-					System.out.println("list of parameters is :"	+a);
-					
-					for(Parameter i: a)
+					List<Parameter> paramList = ((MethodDeclaration) member).getParameters();
+
+					//System.out.println("list of parameters is :"	+a);
+
+					for(Parameter eachParam: paramList)
 					{
-						System.out.println("list of parameters is :"	+i);
-						md.Pramaters = i; 
+						//System.out.println("list of parameters is :"	+i);
+						//md.Pramaters = i; 
+						md.setParamaters(eachParam);
 					}
 
-					hashmp2.put(md.Name,md);
+					//hashmp2.put(md.Name,md);
+					//hashmpClassNameToMethodMap.putAll(className,hasmp);
 					//System.out.println(((FieldDeclaration) member).getModifiers());
 
 					//System.out.println(((TypeDeclaration) member).getModifiers());
 					//String Mn = Modifier.toString(a);
 					//System.out.println("Access Specifier of Class:" + Mn);
+					//System.out.println("Hashmap is :" +hashmp2);
+
+					methodDetaisList.add(md);
 
 				}
 			}
+			//ct.setListOfMethods(methodDetaisList);
+			
 		}
+		return methodDetaisList;
 	}
+
+
 	private static void fetchVariable(HashMap<String, TypeDeclaration> hmap) {
 		// TODO Auto-generated method stub
 		Iterator<Entry<String, TypeDeclaration>> mapIterator = hmap.entrySet().iterator();
