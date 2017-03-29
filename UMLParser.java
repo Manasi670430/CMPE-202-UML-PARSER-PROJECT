@@ -118,6 +118,77 @@ public class UMLParser {
 		return fileNames;
 	}
 
+		private static List<AttributeDetails> GetVariableDetails(List<TypeDeclaration> types) {
+		// TODO Auto-generated method stub
+
+		//List<TypeDeclaration> types = cu.getTypes();
+
+		
+		List<AttributeDetails> listOfFields = new ArrayList<AttributeDetails>();
+
+
+		for (TypeDeclaration type : types) {
+			// Go through all fields, methods, etc. in this type
+			List<BodyDeclaration> members = type.getMembers();
+			for (BodyDeclaration member : members) {
+				if (member instanceof FieldDeclaration) {
+					AttributeDetails attributedetails = new AttributeDetails();
+					//FieldDeclaration
+					System.out.println("Variable name is"+((FieldDeclaration) member).getVariables());
+
+					String S = (((FieldDeclaration) member).getVariables()).toString();
+					System.out.println("My S is" +S);
+					String result = S.substring(S.indexOf("[") + 1, S.indexOf("]"));
+					System.out.println(result);
+
+
+					//attributedetails.Name = result;
+
+					attributedetails.setName(result);
+					attributedetails.setType(((FieldDeclaration) member).getType());
+
+					//attributedetails.Type = ((FieldDeclaration) member).getType();
+
+					//hashmp.put(attributedetails.Name, attributedetails);
+
+					//storeVariableDetails.add((FieldDeclaration)member);
+
+
+					int x=((FieldDeclaration) member).getModifiers();
+					if(x==1){
+						System.out.println("Modifier of variable is: PublicVariable");
+						//attributedetails.Modifier = "Public";
+						attributedetails.setModifier("Public");
+					}
+					if(x==2)
+					{
+						System.out.println("Modifier of variable is : PrivateVariable");
+						//attributedetails.Modifier = "Private";
+						attributedetails.setModifier("Private");
+					}
+
+					//hashmp.put(attributedetails.Name, attributedetails);
+
+					System.out.println("Type of variable is "+((FieldDeclaration) member).getType());
+
+					//System.out.println();
+
+
+					//System.out.println(((FieldDeclaration) member).getModifiers());
+
+					//System.out.println(((TypeDeclaration) member).getModifiers());
+					//String Mn = Modifier.toString(a);
+					//System.out.println("Access Specifier of Class:" + Mn);
+
+					listOfFields.add(attributedetails);
+				}
+			}
+			//ct.setListOfFields(listOfFields);
+		}
+		System.out.println("ListOfFieldsContains:"+attributedetails);
+		return listOfFields;
+	}
+
 	private static List<MethodDetails> GetMethodDetails(List<TypeDeclaration> types) {
 		// TODO Auto-generated method stub
 		//List<TypeDeclaration> types = cu.getTypes();
