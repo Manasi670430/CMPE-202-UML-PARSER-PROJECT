@@ -188,7 +188,6 @@ public class UMLParser {
 		System.out.println("ListOfFieldsContains:"+attributedetails);
 		return listOfFields;
 	}
-
 	private static List<MethodDetails> GetMethodDetails(List<TypeDeclaration> types) {
 		// TODO Auto-generated method stub
 		//List<TypeDeclaration> types = cu.getTypes();
@@ -238,14 +237,14 @@ public class UMLParser {
 						md.setParamaters(eachParam);
 					}
 
-					//hashmp2.put(md.Name,md);
-					//hashmpClassNameToMethodMap.putAll(className,hasmp);
-					//System.out.println(((FieldDeclaration) member).getModifiers());
+					hashmp2.put(md.Name,md);
+					hashmpClassNameToMethodMap.putAll(className,hasmp);
+					System.out.println(((FieldDeclaration) member).getModifiers());
 
-					//System.out.println(((TypeDeclaration) member).getModifiers());
-					//String Mn = Modifier.toString(a);
-					//System.out.println("Access Specifier of Class:" + Mn);
-					//System.out.println("Hashmap is :" +hashmp2);
+					System.out.println(((TypeDeclaration) member).getModifiers());
+					String Mn = Modifier.toString(a);
+					System.out.println("Access Specifier of Class:" + Mn);
+					System.out.println("Hashmap is :" +hashmp2);
 
 					methodDetaisList.add(md);
 
@@ -333,11 +332,11 @@ public class UMLParser {
 
 
 
-					//System.out.println(((FieldDeclaration) member).getModifiers());
+					System.out.println(((FieldDeclaration) member).getModifiers());
 
-					//System.out.println(((TypeDeclaration) member).getModifiers());
-					//String Mn = Modifier.toString(a);
-					//System.out.println("Access Specifier of Class:" + Mn);
+					System.out.println(((TypeDeclaration) member).getModifiers());
+					String Mn = Modifier.toString(a);
+					System.out.println("Access Specifier of Class:" + Mn);
 
 				}
 			}
