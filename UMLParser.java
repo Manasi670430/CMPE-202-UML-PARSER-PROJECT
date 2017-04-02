@@ -98,12 +98,6 @@ public class UMLParser {
 			//new ParseJavaToUML.ClassVisitor().visit(cu, umlParser);
 		}
 
-			// change the methods names and parameters
-			// changeMethods(cu);
-
-			// prints the changed compilation unit
-			
-
 			new PlantUMLInputStringBuilder().generatePlantUMlStringInput(classTemplateMap, imageFileName);
 
 		}
@@ -171,15 +165,7 @@ public class UMLParser {
 
 					System.out.println("Type of variable is "+((FieldDeclaration) member).getType());
 
-					//System.out.println();
-
-
-					//System.out.println(((FieldDeclaration) member).getModifiers());
-
-					//System.out.println(((TypeDeclaration) member).getModifiers());
-					//String Mn = Modifier.toString(a);
-					//System.out.println("Access Specifier of Class:" + Mn);
-
+			
 					listOfFields.add(attributedetails);
 				}
 			}
@@ -343,6 +329,34 @@ public class UMLParser {
 		}
 
 		
+	}
+	public static void AssociationRel() {
+		String first = "";
+		String second = "";
+		String relation = "";
+		String relationFirst = "";
+		String relationSecond = "";
+	}
+	
+	public static void DepedencyRel() {
+		String first = "";
+		String second = "";
+		String relation = "";
+
+		public int hashCode() {
+			int hashcode = first.hashCode() + second.hashCode() + relation.hashCode();
+			return hashcode;
+		}
+		
+	
+		public boolean equals(Object obj) {
+			if(obj instanceof DepedencyRel){				
+				DepedencyRel dr = (DepedencyRel)obj;
+				return (dr.first.equals(this.first) && dr.second.equals(this.second) && dr.relation.equals(this.relation));				
+			}else {
+				return false;
+			}
+		}
 	}
 
 	private static void GetTheClassDetails(CompilationUnit cu) {
