@@ -161,8 +161,7 @@ public class UMLParser {
 						attributedetails.setModifier("Private");
 					}
 
-					//hashmp.put(attributedetails.Name, attributedetails);
-
+					
 					System.out.println("Type of variable is "+((FieldDeclaration) member).getType());
 
 			
@@ -189,13 +188,11 @@ public class UMLParser {
 				if (member instanceof MethodDeclaration) {
 
 					System.out.println("Method name is :"+((MethodDeclaration) member).getName());
-					//md.Name = ((MethodDeclaration) member).getName();
 					md.setName(((MethodDeclaration) member).getName());
 
 					System.out.println(((MethodDeclaration) member).getModifiers());
 
 					System.out.println(((MethodDeclaration) member).getType());
-					//md.returnType = ((MethodDeclaration) member).getType();
 					md.setReturnType(((MethodDeclaration) member).getType());
 
 					int x=((MethodDeclaration) member).getModifiers();
@@ -203,23 +200,19 @@ public class UMLParser {
 					if(x==1){
 						System.out.println("Modifier of method is: "+ Modifier.toString(x));
 						md.setModifier(Modifier.toString(x));
-						//md.Modifier = "Public";
 					}
 					if(x==2)
 					{
 						System.out.println("Modifier of method is : "+ Modifier.toString(x));
-						//md.Modifier = "Private";
 						md.setModifier(Modifier.toString(x));
 					}
 
 					List<Parameter> paramList = ((MethodDeclaration) member).getParameters();
 
-					//System.out.println("list of parameters is :"	+a);
-
+					
 					for(Parameter eachParam: paramList)
 					{
-						//System.out.println("list of parameters is :"	+i);
-						//md.Pramaters = i; 
+						 
 						md.setParamaters(eachParam);
 					}
 
@@ -329,6 +322,47 @@ public class UMLParser {
 		}
 
 		
+	}
+	
+	public static void ObjectDesc (){
+		String name = "";
+		Boolean isInterface = false;
+		List<VariableDesc> variables = null;
+		List<MethodDesc> methods = null;
+		List<ConstructorDesc> constructors = null;
+		List<AssociationRel> associationRelationships = null;
+		List<String> usersOfInterface = null;
+		List<String> implementersOfInterface = null;
+		List<String> extendersOfClass = null;
+		List<DepedencyRel> dependencyRelationships = null;
+		GettersAndSetters gns = null;
+
+		public ObjectDesc(String name) {
+			this.name = name;
+			variables = new ArrayList<VariableDesc>();
+			methods = new ArrayList<MethodDesc>();
+			constructors = new ArrayList<ConstructorDesc>();
+			associationRelationships = new ArrayList<AssociationRel>();
+			usersOfInterface = new ArrayList<String>();
+			implementersOfInterface = new ArrayList<String>();
+			extendersOfClass = new ArrayList<String>();
+			dependencyRelationships = new ArrayList<DepedencyRel>();
+			gns = new GettersAndSetters();
+		}
+		
+		public MethodDesc findMethodByName(String name){
+			for(MethodDesc md : methods){
+				if(md.name.equalsIgnoreCase(name)){
+					return md;
+				}				
+			}	
+			return null;
+		}
+
+		
+		public String toString() {
+			return name + variables; // + methods;
+		}
 	}
 	public static void AssociationRel() {
 		String first = "";
