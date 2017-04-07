@@ -234,6 +234,81 @@ public class UMLParser {
 		}
 		return methodDetaisList;
 	}
+		public String generateUMLConnections(ClassTemplate cTemplate)
+	{
+		String umlConnectionsString = "";
+		List<AttributeDetails> attributeDetails = cTemplate.getListOfFields();
+		
+		
+		for(AttributeDetails eachAttribute : attributeDetails)
+		{
+			if(eachAttribute.getType() instanceof ReferenceType)
+			{
+				if(((ReferenceType)eachAttribute.getType()).getType() instanceof ClassOrInterfaceType)
+				{
+					String typeCollectionOrOnlyClass = ((ClassOrInterfaceType)((ReferenceType)eachAttribute.getType()).getType()).getName().toString();
+				
+					
+					String associationEndClass = "";
+					String associationStartClass = "";
+					if(typeCollectionOrOnlyClass.equals("Collection"))
+					{
+						List<Type> associationEndClassTypeList = ((ClassOrInterfaceType)((ReferenceType)eachAttribute.getType()).getType()).getTypeArgs();
+						associationEndClass = associationEndClassTypeList.get(0).toString();
+						associationStartClass = cTemplate.getCd().getName().toString();
+						
+						boolean connectionExistFlag = false;
+						
+						for(ConnectionDetails eachConnection : connectionDetailList)
+						{
+							boolean associationStartClassExist = associationStartClass.equals(eachConnection.getConnectionStart()) || associationStartClass.equals(eachConnection.getConnectionEnd());
+							boolean associationEndClassExist = associationEndClass.equals(eachConnection.getConnectionEnd()) || associationEndClass.equals(eachConnection.getConnectionStart());
+							
+							
+							if(associationStartClassExist && associationEndClassExist)
+							{
+								boolean connectionExist = eachConnection.getConnetionType()!=null && eachConnection.getConnetionType().toString().equals("ASSOCIATION");
+								if(connectionExist)
+								{
+									connectionExistFlag = true;
+								}
+								
+							}
+						}
+						
+						if(!connectionExistFlag)
+						{
+							ConnectionDetails connectionDetails = new ConnectionDetails();
+							connectionDetails.setConnectionStart(associationStartClass);
+							connectionDetails.setConnectionEnd(associationEndClass);
+							connectionDetails.setConnetionType("ASSOCIATION");
+							connectionDetailList.add(connectionDetails);
+							
+							umlConnectionsString += associationEndClass + "\"*\"" + " -- " + "\"1\"" + cTemplate.getCd().getName() + "\n";
+						}
+						
+						
+					}
+					else
+					{
+						boolean connectionExistFlag = false;
+						associationEndClass = ((ClassOrInterfaceType)((ReferenceType)eachAttribute.getType()).getType()).getName().toString();
+						associationStartClass = cTemplate.getCd().getName().toString();
+						
+						
+						
+					}
+				}
+			}
+				
+		}
+		
+		
+		return umlConnectionsString;
+	}
+
+
+}
 
 
 	private static void fetchVariable(HashMap<String, TypeDeclaration> hmap) {
