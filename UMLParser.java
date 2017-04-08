@@ -173,6 +173,54 @@ public class UMLParser {
 		System.out.println("ListOfFieldsContains:"+attributedetails);
 		return listOfFields;
 	}
+	public static ClassTemplate getClassTemplate(List<TypeDeclaration> types)
+	{
+		ClassDetails cd = new ClassDetails();
+		ClassTemplate ct = new ClassTemplate();
+		List<AttributeDetails> listOfFields = new ArrayList<AttributeDetails>();
+		List<MethodDetails> methodDetaisList = new ArrayList<MethodDetails>();
+		
+		List<ClassOrInterfaceType> extendsList = new ArrayList<ClassOrInterfaceType>();
+		List<ClassOrInterfaceType> implementsList = new ArrayList<ClassOrInterfaceType>();
+		MethodDetails md = new MethodDetails();
+		for (TypeDeclaration type : types) {
+			
+			if (type instanceof ClassOrInterfaceDeclaration)
+				// System.out.println("Output of type is:"+type);
+			{
+				extendsList = ((ClassOrInterfaceDeclaration) type).getExtends();
+				
+				implementsList = ((ClassOrInterfaceDeclaration) type).getImplements();
+				
+				if(implementsList!=null)
+				{
+					cd.setImplementsList(implementsList);
+				}
+				
+				if(extendsList!=null)
+				{
+					cd.setExtendsList(extendsList);
+				}
+				
+				if (((ClassOrInterfaceDeclaration) type).isInterface()) {
+					System.out.println("This is interface");
+					//cd.isInterface = true; 
+					cd.setInterface(true);
+					cd.setName(type.getName().toString());
+					//classDetailList.add(cd);
+					//break;
+				} else {
+					System.out.println("This is class");
+					//cd.isInterface = false;
+					cd.setInterface(false);
+					System.out.println("Class Name is:" + type.getName());
+					//cd.Name = type.getName().toString();
+					cd.setName(type.getName().toString());
+					//hashmp1.put(cd.Name, cd);
+					//classDetailList.add(cd);
+
+				}
+			}
 	private static List<MethodDetails> GetMethodDetails(List<TypeDeclaration> types) {
 		// TODO Auto-generated method stub
 		//List<TypeDeclaration> types = cu.getTypes();
