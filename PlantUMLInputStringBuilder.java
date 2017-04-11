@@ -148,7 +148,7 @@ public class PlantUMLInputStringBuilder {
 		}
 
 		List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
-		
+		//List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
 		if(methodDetailsList!=null)
 		{
 			for(MethodDetails eachMethod : methodDetailsList)
@@ -169,7 +169,19 @@ public class PlantUMLInputStringBuilder {
 					
 					
 				}
-				
+				if(eachMethod.getModifier().equals("private"))
+				{
+					
+					if(params!=null)
+					{
+						umlClassInterfaceBody += "-"+ eachMethod.getName() + "(" + params.getId().toString() + ":" + params.getType().toString() + ") :" + eachMethod.getReturnType().toString() + "\n";
+					}
+					else
+					{
+						umlClassInterfaceBody += "-"+ eachMethod.getName() + "() :" + eachMethod.getReturnType().toString() + "\n";
+					}
+					
+				}
 			}
 		}
 		return umlClassInterfaceBody;
