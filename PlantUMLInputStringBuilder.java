@@ -35,7 +35,7 @@ public class PlantUMLInputStringBuilder {
 
 	List<ConnectionDetails> connectionDetailList = new ArrayList<ConnectionDetails>();
 
-	public void generatePlantUMlStringInput(HashMap<String, ClassTemplate> classTemplateMap, String imageFileName)
+	public void generatePlantUMlStringInput(HashMap<String, ClassTemplate> classTemplateMap, String imageFileName, List<ClassTemplate> ctList)
 	{
 
 
@@ -50,7 +50,7 @@ public class PlantUMLInputStringBuilder {
 
 			ClassTemplate cTemplate = (ClassTemplate)mentry.getValue();
 
-			inputStringForPlantUML += generateUMLClassOrInterfaceBody(cTemplate);
+			inputStringForPlantUML += generateUMLClassOrInterfaceBody(cTemplate, ctList);
 
 			finalString += inputStringForPlantUML + "}\n" ;
 
@@ -62,7 +62,11 @@ public class PlantUMLInputStringBuilder {
 			Map.Entry mentry = (Map.Entry)iterator1.next();
 			ClassTemplate cTemplate = (ClassTemplate)mentry.getValue();
 
-			finalString += generateUMLConnections(cTemplate);
+			if(!cTemplate.getCd().isInterface())
+			{
+				finalString += generateUMLConnections(cTemplate,ctList);
+			}
+
 
 		}
 
@@ -97,7 +101,7 @@ public class PlantUMLInputStringBuilder {
 
 
 
-	public String generateUMLClassOrInterfaceBody(ClassTemplate cTemplate)
+	public String generateUMLClassOrInterfaceBody(ClassTemplate cTemplate, List<ClassTemplate> ctList)
 	{
 		String umlClassInterfaceBody = "";
 
@@ -112,8 +116,9 @@ public class PlantUMLInputStringBuilder {
 		}
 
 		List<AttributeDetails> attributeDetails = cTemplate.getListOfFields();
-		
-		
+
+		//System.out.println("ATTRIBUTE DETAILS LIST :" +cTemplate.getListOfFields());
+
 		if(attributeDetails!=null)
 		{
 			for(AttributeDetails eachAttribute : attributeDetails)
@@ -144,50 +149,47 @@ public class PlantUMLInputStringBuilder {
 						}
 					}
 				}
+				if(eachAttribute.getType() instanceof PrimitiveType)
+				{
+					if(eachAttribute.getModifier().equalsIgnoreCase("Private"))
+					{
+						umlClassInterfaceBody += "-"+ eachAttribute.getName() + ":" + eachAttribute.getType() + "\n";
+					}
+					if(eachAttribute.getModifier().equalsIgnoreCase("Public"))
+					{
+						umlClassInterfaceBody += "+" + eachAttribute.getName() + ":" + eachAttribute.getType() + "\n";																				
+					}
+				}
 			}
 		}
 
 		List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
 		//List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
-		if(methodDetailsList!=null)
+		
+		List<ConstructorDetails> consDetails = cTemplate.getListOfConstructor();
+		if(consDetails!=null)
 		{
-			for(MethodDetails eachMethod : methodDetailsList)
+			for(ConstructorDetails eachConstructor : consDetails)
 			{
-				Parameter params = eachMethod.getParamaters();
-				if(eachMethod.getModifier().equals("public"))
+				Parameter params = eachConstructor.getConstructorParams();
+
+
+				if(params!=null)
 				{
-					
-					
-					if(params!=null)
-					{
-						umlClassInterfaceBody += "+"+ eachMethod.getName() + "(" + params.getId().toString() + ":" + params.getType().toString() + ") :" + eachMethod.getReturnType().toString() + "\n";
-					}
-					else
-					{
-						umlClassInterfaceBody += "-"+ eachMethod.getName() + "() :" + eachMethod.getReturnType().toString() + "\n";
-					}
-					
-					
+					umlClassInterfaceBody += "+"+ eachConstructor.getConstructorName() + "(" + params.getId().toString() + ":" + params.getType().toString() + ")" +  "\n";
 				}
-				if(eachMethod.getModifier().equals("private"))
+				else
 				{
-					
-					if(params!=null)
-					{
-						umlClassInterfaceBody += "-"+ eachMethod.getName() + "(" + params.getId().toString() + ":" + params.getType().toString() + ") :" + eachMethod.getReturnType().toString() + "\n";
-					}
-					else
-					{
-						umlClassInterfaceBody += "-"+ eachMethod.getName() + "() :" + eachMethod.getReturnType().toString() + "\n";
-					}
-					
+					umlClassInterfaceBody += "+"+ eachConstructor.getConstructorName() + "()" + "\n";
 				}
 			}
 		}
+
+
 		return umlClassInterfaceBody;
 	}
 
-	public String generateUMLConnections(ClassTemplate cTemplate)
+	public String generateUMLConnections(ClassTemplate cTemplate, List<ClassTemplate> ctList)
 	{
 		String umlConnectionsString = "";
 		List<AttributeDetails> attributeDetailsList = cTemplate.getListOfFields();
@@ -231,26 +233,30 @@ public class PlantUMLInputStringBuilder {
 
 									}
 								}
-								
-							}
-							else
-							{
-								boolean connectionExistFlag = false;
-								associationEndClass = ((ClassOrInterfaceType)((ReferenceType)eachAttribute.getType()).getType()).getName().toString();
-								associationStartClass = cTemplate.getCd().getName().toString();
+								if(!connectionExistFlag)
+								{
+									ConnectionDetails connectionDetails = new ConnectionDetails();
+									connectionDetails.setConnectionStart(associationStartClass);
+									connectionDetails.setConnectionEnd(associationEndClass);
+									connectionDetails.setConnetionType("ASSOCIATION");
+									connectionDetailList.add(connectionDetails);
 
+									umlConnectionsString += associationEndClass + "\"*\"" + " -- " + "\"1\"" + cTemplate.getCd().getName() + "\n";
+								}
 							
+							
+
 							}
 						}
 					}
 				}
 			}
 		}
+
 		
-	
-		}
+
+
 		
-	
 }
 
 
