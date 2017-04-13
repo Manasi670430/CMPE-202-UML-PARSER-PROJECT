@@ -1,0 +1,25 @@
+import java.util.List;
+
+import japa.parser.ast.body.Parameter;
+
+/**
+ * 
+ */
+
+/**
+ * @author Manasi Milind Joshi
+ *
+ */
+public class ConstructorDetails {
+
+	private String constructorName;
+	private Parameter constructorParams;
+	private String modifier;
+	public String getConstructorName() {
+		return constructorName;
+	}
+	public void setConstructorName(String constructorName) {
+		this.constructorName = constructorName;
+	}
+
+}
