@@ -25,9 +25,6 @@ import net.sourceforge.plantuml.SourceStringReader;
  *
  */
 public class PlantUMLInputStringBuilder {
-
-
-
 	String finalString="";
 	String finalString1="";
 	String a="@startuml\n";
@@ -243,6 +240,23 @@ public class PlantUMLInputStringBuilder {
 
 						}
 					}
+							if(extendsList!=null)
+		{
+			for(ClassOrInterfaceType extendDef : extendsList)
+			{
+				String extendSourceClass = "";
+				String extendDestinationClass = "";
+				extendDestinationClass = cTemplate.getCd().getExtendsList().get(0).toString();
+				extendSourceClass = cTemplate.getCd().getName().toString();
+
+				ConnectionDetails connectionDetails = new ConnectionDetails();
+				connectionDetails.setConnectionStart(extendSourceClass);
+				connectionDetails.setConnectionEnd(extendDestinationClass);
+				connectionDetails.setConnetionType("EXTENDS");
+				connectionDetailList.add(connectionDetails);
+				umlConnectionsString += extendDestinationClass + "<|-- " + extendSourceClass + "\n";
+			}
+		}
 				}
 			}
 		}
