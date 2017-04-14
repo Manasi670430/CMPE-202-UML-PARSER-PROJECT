@@ -45,9 +45,6 @@ public class PlantUMLInputStringBuilder {
 		while(iterator.hasNext()) {
 			String inputStringForPlantUML= "" ;
 			Map.Entry mentry = (Map.Entry)iterator.next();
-			//imputStringForPlantUML ="Class "+ mentry.getKey()+"\n";
-
-
 			ClassTemplate cTemplate = (ClassTemplate)mentry.getValue();
 
 			inputStringForPlantUML += generateUMLClassOrInterfaceBody(cTemplate, ctList);
@@ -70,14 +67,7 @@ public class PlantUMLInputStringBuilder {
 
 		}
 
-
-
-
-
-
 		finalString1 += finalString + "\n" ;
-		//finalString + "}\n";
-		//finalString1 =	a + finalString + b + "}\n"; 
 
 		System.out.println(finalString1);
 		finalString1 = a + "skinparam classAttributeIconSize 0\n" + finalString1 + b;
@@ -116,9 +106,6 @@ public class PlantUMLInputStringBuilder {
 		}
 
 		List<AttributeDetails> attributeDetails = cTemplate.getListOfFields();
-
-		//System.out.println("ATTRIBUTE DETAILS LIST :" +cTemplate.getListOfFields());
-
 		if(attributeDetails!=null)
 		{
 			for(AttributeDetails eachAttribute : attributeDetails)
@@ -164,8 +151,6 @@ public class PlantUMLInputStringBuilder {
 		}
 
 		List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
-		//List<MethodDetails> methodDetailsList = cTemplate.getListOfMethods();
-		
 		List<ConstructorDetails> consDetails = cTemplate.getListOfConstructor();
 		if(consDetails!=null)
 		{
@@ -243,20 +228,26 @@ public class PlantUMLInputStringBuilder {
 
 									umlConnectionsString += associationEndClass + "\"*\"" + " -- " + "\"1\"" + cTemplate.getCd().getName() + "\n";
 								}
-							
-							
+								if(methodParams!=null)
+				{
+					String dependencyDestinationClass = methodParams.getType().toString();
+					String dependencySourceClass = cTemplate.getCd().getName();
 
-							}
+
+					ConnectionDetails connectionDetails = new ConnectionDetails();
+					connectionDetails.setConnectionStart(dependencySourceClass);
+					connectionDetails.setConnectionEnd(dependencyDestinationClass);
+					connectionDetails.setConnetionType("DEPENDENCY");
+					connectionDetailList.add(connectionDetails);
+					umlConnectionsString += dependencyDestinationClass + "<.." + dependencySourceClass + "\n";
+
 						}
 					}
 				}
 			}
 		}
+	}
 
-		
-
-
-		
 }
 
 
