@@ -573,4 +573,13 @@ public class UMLParser {
 		}
  
 	}
+	public static ArrayList<String> listFilesForFolder(final File folder) {
+		ArrayList<String> fileNames = new ArrayList<String>();
+		for (final File fileEntry : folder.listFiles()) {
+
+			if (fileEntry.getName().endsWith(".java") || fileEntry.getName().endsWith(".JAVA"))
+				fileNames.add(fileEntry.getName());
+		}
+		return fileNames;
+	}
 }
