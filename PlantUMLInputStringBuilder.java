@@ -242,22 +242,44 @@ public class PlantUMLInputStringBuilder {
 					}
 							if(extendsList!=null)
 		{
-			for(ClassOrInterfaceType extendDef : extendsList)
-			{
-				String extendSourceClass = "";
-				String extendDestinationClass = "";
-				extendDestinationClass = cTemplate.getCd().getExtendsList().get(0).toString();
-				extendSourceClass = cTemplate.getCd().getName().toString();
-
-				ConnectionDetails connectionDetails = new ConnectionDetails();
-				connectionDetails.setConnectionStart(extendSourceClass);
-				connectionDetails.setConnectionEnd(extendDestinationClass);
-				connectionDetails.setConnetionType("EXTENDS");
-				connectionDetailList.add(connectionDetails);
-				umlConnectionsString += extendDestinationClass + "<|-- " + extendSourceClass + "\n";
-			}
+		
 		}
+			if(extendsList!=null)
+			{
+				for(ClassOrInterfaceType extendDef : extendsList)
+				{
+					String extendSourceClass = "";
+					String extendDestinationClass = "";
+					extendDestinationClass = cTemplate.getCd().getExtendsList().get(0).toString();
+					extendSourceClass = cTemplate.getCd().getName().toString();
+
+					ConnectionDetails connectionDetails = new ConnectionDetails();
+					connectionDetails.setConnectionStart(extendSourceClass);
+					connectionDetails.setConnectionEnd(extendDestinationClass);
+					connectionDetails.setConnetionType("EXTENDS");
+					connectionDetailList.add(connectionDetails);
+					umlConnectionsString += extendDestinationClass + "<|-- " + extendSourceClass + "\n";
 				}
+			}
+
+			if(implementsList!=null)
+			{
+				for(ClassOrInterfaceType implementsDef : implementsList)
+				{
+					String implementsSourceClass = "";
+					String implementsDestinationClass = "";
+
+					implementsDestinationClass = implementsDef.toString();
+					implementsSourceClass = cTemplate.getCd().getName().toString();
+
+					ConnectionDetails connectionDetails = new ConnectionDetails();
+					connectionDetails.setConnectionStart(implementsSourceClass);
+					connectionDetails.setConnectionEnd(implementsDestinationClass);
+					connectionDetails.setConnetionType("IMPLEMENTS");
+					connectionDetailList.add(connectionDetails);
+					umlConnectionsString += implementsDestinationClass + "<|.. " + implementsSourceClass + "\n";
+				}
+			}
 			}
 		}
 	}
