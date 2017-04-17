@@ -240,10 +240,26 @@ public class PlantUMLInputStringBuilder {
 
 						}
 					}
-							if(extendsList!=null)
+					if(constDetailsList!=null)
 		{
-		
+		for(ConstructorDetails eachM : constDetailsList)
+		{
+			Parameter methodParams = eachM.getConstructorParams();
+
+
+								if(dependencySourceClassExist && dependencyDestinationClassExist)
+								{
+									boolean connectionExist = eachConnection.getConnetionType()!=null && eachConnection.getConnetionType().toString().equals("DEPENDENCY");
+									if(connectionExist)
+									{
+										connectionExistFlag = true;
+									}
+
+								}
+							}
 		}
+
+							
 			if(extendsList!=null)
 			{
 				for(ClassOrInterfaceType extendDef : extendsList)
