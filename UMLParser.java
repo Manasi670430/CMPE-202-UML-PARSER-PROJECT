@@ -6,10 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-
 import javax.swing.plaf.metal.MetalToggleButtonUI;
-
-
 import japa.parser.JavaParser;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.BodyDeclaration;
@@ -38,13 +35,6 @@ public class UMLParser {
 	private static ClassTemplate ct = new ClassTemplate();
 
 	private static ClassDetails cd = new ClassDetails();
-
-	//public static HashMap<String, AttributeDetails> hashmp = new HashMap();
-	//public static HashMap<String, ClassDetails> hashmp1 = new HashMap();
-	//public static HashMap<String,> hashmpClassNameToMethodMap = new HashMap();
-	//public static HashMap<String, MethodDetails> hashmp2 = new HashMap();
-
-
 	private static HashMap<String, TypeDeclaration> typeCollectionMap = new HashMap<String, TypeDeclaration>();
 
 	public static void main(String[] args) throws Exception {
@@ -68,7 +58,6 @@ public class UMLParser {
 		HashMap<String, ClassTemplate> classTemplateMap = new HashMap<String,ClassTemplate>();
 		
 		List<ClassTemplate> ctList = new ArrayList<ClassTemplate>();
-		//javaFileNames = listFilesForFolder(folder);
 		CompilationUnit cu = null;
 		//ClassTemplate ctemplate = null;
 		
@@ -277,7 +266,6 @@ public class UMLParser {
 
 				}
 			}
-			//ct.setListOfMethods(methodDetaisList);
 			
 		}
 		return methodDetaisList;
@@ -359,32 +347,6 @@ public class UMLParser {
 }
 
 
-	private static void fetchVariable(HashMap<String, TypeDeclaration> hmap) {
-		// TODO Auto-generated method stub
-		Iterator<Entry<String, TypeDeclaration>> mapIterator = hmap.entrySet().iterator();
-		System.out.print(hmap);
-		List<FieldDeclaration> myVariableList = new ArrayList<FieldDeclaration>();
-
-		for(FieldDeclaration fd: myVariableList){
-
-			Type variable=fd.getType();
-			System.out.println(variable);
-			
-			//Checking for the reference type of the variable whether primitive type or reference type
-        	if(((FieldDeclaration) fd).getType() instanceof PrimitiveType)
-			{
-				//call generatePLantUML method to build the string input for plant UML
-        		String plantUMLInputString = new PlantUMLInputStringBuilder().generatePlantUMlStringInput(fd);
-			}
-        	else if(((FieldDeclaration) fd).getType() instanceof ReferenceType)
-        	{
-				//call generatePLantUML method to build the string input for plant UML
-        		
-        	}
-
-
-		}
-	}
 		private static void GetVariableDetails(CompilationUnit cu) {
 		// TODO Auto-generated method stub
 		
@@ -447,31 +409,7 @@ public class UMLParser {
 		
 	}
 	
-	public static void ObjectDesc (){
-		String name = "";
-		Boolean isInterface = false;
-		List<VariableDesc> variables = null;
-		List<MethodDesc> methods = null;
-		List<ConstructorDesc> constructors = null;
-		List<AssociationRel> associationRelationships = null;
-		List<String> usersOfInterface = null;
-		List<String> implementersOfInterface = null;
-		List<String> extendersOfClass = null;
-		List<DepedencyRel> dependencyRelationships = null;
-		GettersAndSetters gns = null;
-
-		public ObjectDesc(String name) {
-			this.name = name;
-			variables = new ArrayList<VariableDesc>();
-			methods = new ArrayList<MethodDesc>();
-			constructors = new ArrayList<ConstructorDesc>();
-			associationRelationships = new ArrayList<AssociationRel>();
-			usersOfInterface = new ArrayList<String>();
-			implementersOfInterface = new ArrayList<String>();
-			extendersOfClass = new ArrayList<String>();
-			dependencyRelationships = new ArrayList<DepedencyRel>();
-			gns = new GettersAndSetters();
-		}
+	
 		
 		public MethodDesc findMethodByName(String name){
 			for(MethodDesc md : methods){
@@ -486,13 +424,6 @@ public class UMLParser {
 		public String toString() {
 			return name + variables; // + methods;
 		}
-	}
-	public static void AssociationRel() {
-		String first = "";
-		String second = "";
-		String relation = "";
-		String relationFirst = "";
-		String relationSecond = "";
 	}
 	
 	public static void DepedencyRel() {
