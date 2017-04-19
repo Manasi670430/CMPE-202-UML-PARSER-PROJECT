@@ -162,6 +162,26 @@ public class UMLParser {
 		System.out.println("ListOfFieldsContains:"+attributedetails);
 		return listOfFields;
 	}
+		List<ConstructorDetails> consDetails = cTemplate.getListOfConstructor();
+		if(consDetails!=null)
+		{
+			for(ConstructorDetails eachConstructor : consDetails)
+			{
+				Parameter params = eachConstructor.getConstructorParams();
+
+
+				if(params!=null)
+				{
+					umlClassInterfaceBody += "+"+ eachConstructor.getConstructorName() + "(" + params.getId().toString() + ":" + params.getType().toString() + ")" +  "\n";
+				}
+				else
+				{
+					umlClassInterfaceBody += "+"+ eachConstructor.getConstructorName() + "()" + "\n";
+				}
+			}
+		}
+		return umlClassInterfaceBody;
+	}
 	public static ClassTemplate getClassTemplate(List<TypeDeclaration> types)
 	{
 		ClassDetails cd = new ClassDetails();
