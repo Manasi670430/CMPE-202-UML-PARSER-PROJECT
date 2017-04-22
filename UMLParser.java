@@ -213,28 +213,18 @@ public class UMLParser {
 				
 				if (((ClassOrInterfaceDeclaration) type).isInterface()) {
 					System.out.println("This is interface");
-					//cd.isInterface = true; 
 					cd.setInterface(true);
 					cd.setName(type.getName().toString());
-					//classDetailList.add(cd);
-					//break;
+					
 				} else {
 					System.out.println("This is class");
-					//cd.isInterface = false;
 					cd.setInterface(false);
 					System.out.println("Class Name is:" + type.getName());
-					//cd.Name = type.getName().toString();
 					cd.setName(type.getName().toString());
-					//hashmp1.put(cd.Name, cd);
-					//classDetailList.add(cd);
-
 				}
 			}
 	private static List<MethodDetails> GetMethodDetails(List<TypeDeclaration> types) {
 		// TODO Auto-generated method stub
-		//List<TypeDeclaration> types = cu.getTypes();
-
-
 		List<MethodDetails> methodDetaisList = new ArrayList<MethodDetails>();
 
 		MethodDetails md = new MethodDetails();
@@ -283,7 +273,6 @@ public class UMLParser {
 					System.out.println("Hashmap is :" +hashmp2);
 
 					methodDetaisList.add(md);
-
 				}
 			}
 			
@@ -350,8 +339,6 @@ public class UMLParser {
 						boolean connectionExistFlag = false;
 						associationEndClass = ((ClassOrInterfaceType)((ReferenceType)eachAttribute.getType()).getType()).getName().toString();
 						associationStartClass = cTemplate.getCd().getName().toString();
-						
-						
 						
 					}
 				}
@@ -428,9 +415,6 @@ public class UMLParser {
 
 		
 	}
-	
-	
-		
 		public MethodDesc findMethodByName(String name){
 			for(MethodDesc md : methods){
 				if(md.name.equalsIgnoreCase(name)){
@@ -446,49 +430,7 @@ public class UMLParser {
 		}
 	}
 	
-	public static void DepedencyRel() {
-		String first = "";
-		String second = "";
-		String relation = "";
-
-		public int hashCode() {
-			int hashcode = first.hashCode() + second.hashCode() + relation.hashCode();
-			return hashcode;
-		}
-		
 	
-		public boolean equals(Object obj) {
-			if(obj instanceof DepedencyRel){				
-				DepedencyRel dr = (DepedencyRel)obj;
-				return (dr.first.equals(this.first) && dr.second.equals(this.second) && dr.relation.equals(this.relation));				
-			}else {
-				return false;
-			}
-		}
-	}
-
-	private static void GetTheClassDetails(CompilationUnit cu) {
-		//extracting ClassName
-		List<TypeDeclaration> types1 = cu.getTypes();
-		
-		for (TypeDeclaration type : types1) {
-
-			if (type instanceof ClassOrInterfaceDeclaration)
-			
-			{
-				if (((ClassOrInterfaceDeclaration) type).isInterface()) {
-					System.out.println("This is interface");
-					break;
-				} else {
-					System.out.println("This is class");
-					System.out.println("Class Name is:" + type.getName());
-	
-
-				}
-			}
-		}
-	}
-
 	private static void classOrInterface(CompilationUnit cu) {
 		// TODO Auto-generated method stub
 
@@ -512,25 +454,5 @@ public class UMLParser {
 		}
 	}
 
-	private static void GetModifiersDetails(CompilationUnit cu) {
-		
-		List<TypeDeclaration> types1 = cu.getTypes();
-		for (TypeDeclaration type : types1) {
-			if (type instanceof ClassOrInterfaceDeclaration) {
-				int a = type.getModifiers();
-				String M = Modifier.toString(a);
-				System.out.println("Access Specifier of Class is:" + M);
-			}
-		}
- 
-	}
-	public static ArrayList<String> listFilesForFolder(final File folder) {
-		ArrayList<String> fileNames = new ArrayList<String>();
-		for (final File fileEntry : folder.listFiles()) {
-
-			if (fileEntry.getName().endsWith(".java") || fileEntry.getName().endsWith(".JAVA"))
-				fileNames.add(fileEntry.getName());
-		}
-		return fileNames;
-	}
+	
 }
