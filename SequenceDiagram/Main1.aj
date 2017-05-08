@@ -53,7 +53,22 @@ public aspect Main1 {
 		}
 		
 	}
+	public static String getClass(String joinPoint) {
+			String messageSignature = joinPoint.substring(10,joinPoint.lastIndexOf(')'));
+			String components[] = messageSignature.split(" ");
+			return components[1].substring(0, components[1].indexOf('.'));
+		}
 
+		private static String getMetho(String joinPoint) {
+			return joinPoint.substring(10,joinPoint.lastIndexOf(')'));
+		}
+		
+		public static String getMessage(String joinPoint) {
+			String messageSignature = joinPoint.substring(10,joinPoint.lastIndexOf(')'));
+			
+			String components[] = messageSignature.split(" ");
+			return components[1].substring(components[1].indexOf('.')+1) + " : "+ components[0];
+		}
 	
 	AspectState aspectState = new AspectState();
 
